@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">  html { height: 100% }
+body { height: 100%; margin: 0; padding: 0 }
+#map_canvas { height: 100% }
+</style>
+<script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfVquUaOXulDFZBoxEiymriRAi7-5rYJQ&callback=initMap">
+</script>
+<script type="text/javascript">  
+	function initialize() {
+	// Create a new StyledMapType object, passing it an array of styles, from snazzymaps.com no label Bright Colors, 
+// and the name to be displayed on the map type control. 
+var styledMapType = new google.maps.StyledMapType( 
+[
+    {
+        "featureType": "all",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "32"
+            },
+            {
+                "lightness": "-3"
+            },
+            {
+                "visibility": "on"
+            },
+            {
+                "weight": "1.18"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "-70"
+            },
+            {
+                "lightness": "14"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "100"
+            },
+            {
+                "lightness": "-14"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "off"
+            },
+            {
+                "lightness": "12"
+            }
+        ]
+    }
+],
+
+{name: 'Styled Map'}); 
+		
+		var mapOptions = {
+			//center at the house I grew up in 
+			center: new google.maps.LatLng(39.2037,-76.8610),  zoom: 12,
+			mapTypeControl: true, 
+			//add the control options at the top left for the different maps
+			mapTypeControlOptions: 
+				{ 
+				style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR, 
+				position: google.maps.ControlPosition.TOP_LEFT, 
+				mapTypeIds:['roadmap','satellite','hybrid','terrain','styled_map'] 
+				},
+				//add zoom control
+				zoomControl: true, 
+				zoomControlOptions: 
+				{ 
+				style: google.maps.ZoomControlStyle.LARGE, 
+				position: google.maps.ControlPosition.RIGHT_BOTTOM 
+				}, 
+				//add scale control
+				scaleControl: true, 
+				scaleControlOptions: 
+				{ 
+				position: google.maps.ControlPosition.TOP_LEFT 
+				}
+						};
+					
+		var map = new google.maps.Map(document.getElementById("map_canvas"),  mapOptions);
+		
+		// create a marker at the Columbia Mall
+		var Columbiamall = new google.maps.LatLng(39.2151,-76.8621);
+			var marker = new google.maps.Marker({
+				position: Columbiamall,
+				map: map});
+				
+				//Create the KML layer
+		var kmlLayer = new google.maps.KmlLayer();
+		
+		var src = 'https://drive.google.com/uc?export=download&id=1ctE_N34OugxV_RRDTF_YWfgjxCBeWVt5';
+		var kmlLayer = new google.maps.KmlLayer(src, {
+				suppressInfoWindows: false,
+				preserveViewport: true,
+				map: map
+});
+            //create a circle of radius 1000m meters around the Columbia Mall
+		var centercircle = new google.maps.Circle({
+			strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+			map: map,
+			center: {lat: 39.2151, lng: -76.8621},
+			radius: 1000
+			});
+			
+			//set to the the styled map
+		map.mapTypes.set('styled_map', styledMapType); 
+ 
+
+	}
+</script>
+</head>
+<body onload="initialize()">
+<div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+<html>
